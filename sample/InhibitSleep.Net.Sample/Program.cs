@@ -4,7 +4,7 @@ Console.WriteLine("Starting InhibitSleep.Net Sample Project");
 
 Console.WriteLine("Requesting Inhibition");
 
-var inhibitor = new MacSleepInhibitor("InhibitSleep.Net Sample");
+var inhibitor = new SleepInhibitor("InhibitSleep.Net Sample");
 
 inhibitor.InhibitSleep();
 
