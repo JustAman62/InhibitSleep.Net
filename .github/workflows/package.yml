@@ -1,0 +1,27 @@
+name: Package and Publish Executables
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-nuget-tool:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 9.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Publish
+        run: dotnet publish --no-restore /p:PublicRelease=true
+      - name: Pack
+        run: dotnet pack --no-build /p:PublicRelease=true
+      - name: Push Packages
+        if: ${{ github.event_name == 'release'}}
+        run: dotnet nuget push "**/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
