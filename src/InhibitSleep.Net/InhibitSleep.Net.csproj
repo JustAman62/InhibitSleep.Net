@@ -1,3 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>InhibitSleep.Net</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
+    <PackageTags>inhibit-sleep;sleep;display;prevent-sleep;</PackageTags>
+  </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>

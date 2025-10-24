@@ -3,6 +3,13 @@ namespace InhibitSleep.Net;
 public interface ISleepInhibitor : IDisposable
 {
     /// <summary>
+    /// Returns <see langword="true"/> if the current platform is supported. Attempting to call
+    /// <see cref="InhibitSleep"/> on an unsupported platform will result in a <see cref="NotSupportedException"/>
+    /// being thrown.
+    /// </summary>
+    public static bool IsSupported { get; }
+
+    /// <summary>
     /// Requests the OS to prevent sleep until the inhibition is released.
     /// This request is only valid for the Thread that it is called from,
     /// and only has any effect for the lifetime of that thread.

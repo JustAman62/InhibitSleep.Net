@@ -5,15 +5,13 @@ namespace InhibitSleep.Net;
 /// <inheritdoc />
 public class WindowsSleepInhibitor : ISleepInhibitor
 {
-    /// <summary>
-    /// The default instance of <see cref="WindowsSleepInhibitor"/>
-    /// </summary>
-    public static WindowsSleepInhibitor Default { get; } = new();
+    /// <inheritdoc />
+    public static bool IsSupported { get; } = OperatingSystem.IsMacOS();
 
     /// <inheritdoc />
     public void InhibitSleep()
     {
-        EnsureWindowsOs();
+        ThrowIfNotSupported();
 
         _ = SetThreadExecutionState(
             ExecutionStateEnum.ES_CONTINUOUS
@@ -25,15 +23,16 @@ public class WindowsSleepInhibitor : ISleepInhibitor
     /// <inheritdoc />
     public void ReleaseInhibition()
     {
-        EnsureWindowsOs();
+        ThrowIfNotSupported();
+
         _ = SetThreadExecutionState(ExecutionStateEnum.ES_CONTINUOUS);
     }
 
-    private void EnsureWindowsOs()
+    private void ThrowIfNotSupported()
     {
-        if (!OperatingSystem.IsWindows())
+        if (!IsSupported)
         {
-            throw new InvalidOperationException(
+            throw new NotSupportedException(
                 $"${nameof(WindowsSleepInhibitor)} can only be used on Windows devices"
             );
         }

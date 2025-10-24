@@ -19,17 +19,36 @@ public class MacSleepInhibitor(string assertionName) : ISleepInhibitor
 
     public uint assertionId;
 
+    /// <inheritdoc />
+    public static bool IsSupported { get; } = OperatingSystem.IsMacOS();
+
+    /// <inheritdoc />
     public void InhibitSleep()
     {
+        ThrowIfNotSupported();
+
         PreventDisplaySleep();
     }
 
+    /// <inheritdoc />
     public void ReleaseInhibition()
     {
+        ThrowIfNotSupported();
+
         if (assertionId != 0)
         {
             IOPMAssertionRelease(assertionId);
             assertionId = 0;
+        }
+    }
+
+    private void ThrowIfNotSupported()
+    {
+        if (!IsSupported)
+        {
+            throw new NotSupportedException(
+                $"${nameof(MacSleepInhibitor)} can only be used on Mac devices"
+            );
         }
     }
 

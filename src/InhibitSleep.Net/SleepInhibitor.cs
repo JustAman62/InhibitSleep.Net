@@ -5,7 +5,7 @@
 /// </summary>
 public class SleepInhibitor : ISleepInhibitor
 {
-    private ISleepInhibitor _inhibitor;
+    private readonly ISleepInhibitor _inhibitor;
 
     public SleepInhibitor(string identifier)
     {
@@ -19,13 +19,17 @@ public class SleepInhibitor : ISleepInhibitor
         }
         else
         {
-            throw new NotSupportedException(
-                $"InhibitSleep.Net is not supported on the current operating system."
-            );
+            _inhibitor = new NullSleepInhibitor();
         }
     }
 
+    /// <inheritdoc />
+    public static bool IsSupported { get; } =
+        MacSleepInhibitor.IsSupported || WindowsSleepInhibitor.IsSupported;
+
+    /// <inheritdoc />
     public void InhibitSleep() => _inhibitor.InhibitSleep();
 
+    /// <inheritdoc />
     public void ReleaseInhibition() => _inhibitor.ReleaseInhibition();
 }
