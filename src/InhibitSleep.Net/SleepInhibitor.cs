@@ -1,5 +1,8 @@
 ﻿namespace InhibitSleep.Net;
 
+/// <summary>
+/// Requests and releases sleep inhibitions from the operating system.
+/// </summary>
 public class SleepInhibitor : ISleepInhibitor
 {
     private ISleepInhibitor _inhibitor;
@@ -9,6 +12,10 @@ public class SleepInhibitor : ISleepInhibitor
         if (OperatingSystem.IsMacOS())
         {
             _inhibitor = new MacSleepInhibitor(identifier);
+        }
+        else if (OperatingSystem.IsWindows())
+        {
+            _inhibitor = new WindowsSleepInhibitor();
         }
         else
         {

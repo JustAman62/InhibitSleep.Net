@@ -1,13 +1,10 @@
 namespace InhibitSleep.Net;
 
-/// <summary>
-/// Defines the interface to request and release sleep inhibitions.
-/// </summary>
-public interface ISleepInhibitor
+public interface ISleepInhibitor : IDisposable
 {
     /// <summary>
     /// Requests the OS to prevent sleep until the inhibition is released.
-    /// This request is only valid for the Thread that it is called from, 
+    /// This request is only valid for the Thread that it is called from,
     /// and only has any effect for the lifetime of that thread.
     /// </summary>
     public void InhibitSleep();
@@ -17,4 +14,13 @@ public interface ISleepInhibitor
     /// sleep no longer needs to be prevented.
     /// </summary>
     public void ReleaseInhibition();
+
+    /// <summary>
+    /// Disposes of any currently active sleep inhibition.
+    /// </summary>
+    void IDisposable.Dispose()
+    {
+        ReleaseInhibition();
+        GC.SuppressFinalize(this);
+    }
 }

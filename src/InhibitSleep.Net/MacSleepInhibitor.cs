@@ -2,6 +2,14 @@ using System.Runtime.InteropServices;
 
 namespace InhibitSleep.Net;
 
+/// <summary>
+/// Uses IOKit APIs available on macOS to create an assertion which will prevent the device from sleeping
+/// whilst the assertion is active.
+/// </summary>
+/// <param name="assertionName">
+/// Identifier that the assertion will be associated with. Should be something like the name of the app requesting
+/// the OS not to sleep.
+/// </param>
 public class MacSleepInhibitor(string assertionName) : ISleepInhibitor
 {
     private const string IOKitLib = "/System/Library/Frameworks/IOKit.framework/IOKit";
