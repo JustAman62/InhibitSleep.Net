@@ -47,7 +47,7 @@ public class MacSleepInhibitor(string assertionName) : ISleepInhibitor
         if (!IsSupported)
         {
             throw new NotSupportedException(
-                $"${nameof(MacSleepInhibitor)} can only be used on Mac devices"
+                $"{nameof(MacSleepInhibitor)} can only be used on Mac devices"
             );
         }
     }
