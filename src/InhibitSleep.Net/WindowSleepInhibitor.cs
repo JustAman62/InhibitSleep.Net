@@ -33,7 +33,7 @@ public class WindowsSleepInhibitor : ISleepInhibitor
         if (!IsSupported)
         {
             throw new NotSupportedException(
-                $"${nameof(WindowsSleepInhibitor)} can only be used on Windows devices"
+                $"{nameof(WindowsSleepInhibitor)} can only be used on Windows devices"
             );
         }
     }
