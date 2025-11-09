@@ -6,7 +6,7 @@ namespace InhibitSleep.Net;
 public class WindowsSleepInhibitor : ISleepInhibitor
 {
     /// <inheritdoc />
-    public static bool IsSupported { get; } = OperatingSystem.IsMacOS();
+    public static bool IsSupported { get; } = OperatingSystem.IsWindows();
 
     /// <inheritdoc />
     public void InhibitSleep()
